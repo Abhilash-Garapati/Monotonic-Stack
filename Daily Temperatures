@@ -1,0 +1,21 @@
+import java.util.*;
+class Solution 
+{
+    public int[] dailyTemperatures(int[] temp) 
+    {
+        Stack <Integer> st = new Stack<>();
+        int res[] = new int[temp.length];
+        int n = temp.length-1;
+        while(n>=0)
+        {
+            while((!st.isEmpty()) && temp[st.peek()]<=temp[n])
+            {
+                st.pop();
+            }
+            res[n] = st.isEmpty()?0:st.peek()-n;
+            st.push(n);
+            n--;
+        }
+        return res;
+    }
+}

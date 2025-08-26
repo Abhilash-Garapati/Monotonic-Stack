@@ -1,0 +1,28 @@
+class Solution 
+{
+    public ArrayList<Integer> nextLargerElement(int[] arr) 
+    {
+        // code here
+        ArrayList <Integer> res = new ArrayList<>(arr.length-1);
+        for(int i = 0;i<arr.length;i++)
+        {
+            res.add(-1);
+        }
+        Stack <Integer> st = new Stack();
+        int n = arr.length-1;
+        while(n>=0)
+        {
+            while((!st.isEmpty()) &&(st.peek()<=arr[n]))
+            {
+                st.pop();
+            }
+            if(!st.isEmpty())
+            {
+                res.set(n,st.peek());
+            }
+            st.push(arr[n]);
+            n--;
+        }
+        return res;
+    }
+}

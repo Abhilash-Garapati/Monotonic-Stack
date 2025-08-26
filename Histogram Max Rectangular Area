@@ -1,0 +1,41 @@
+import java.util.*;
+
+class Solution {
+    public int getMaxArea(int[] arr) {
+        int n = arr.length;
+        int[] left = new int[n];
+        int[] right = new int[n];
+        Stack<Integer> st = new Stack<>();
+
+        // Step 1: Find previous smaller (left)
+        for (int i = 0; i < n; i++) {
+            while (!st.isEmpty() && arr[st.peek()] >= arr[i]) {
+                st.pop();
+            }
+            left[i] = st.isEmpty() ? -1 : st.peek();
+            st.push(i);
+        }
+
+        // Clear stack for reuse
+        st.clear();
+
+        // Step 2: Find next smaller (right)
+        for (int i = n - 1; i >= 0; i--) {
+            while (!st.isEmpty() && arr[st.peek()] >= arr[i]) {
+                st.pop();
+            }
+            right[i] = st.isEmpty() ? n : st.peek();
+            st.push(i);
+        }
+
+        // Step 3: Calculate max area
+        int maxArea = 0;
+        for (int i = 0; i < n; i++) {
+            int width = right[i] - left[i] - 1;
+            int area = arr[i] * width;
+            maxArea = Math.max(maxArea, area);
+        }
+
+        return maxArea;
+    }
+}
